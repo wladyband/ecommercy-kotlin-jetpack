@@ -5,8 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,12 +16,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -92,12 +96,58 @@ fun LoginContent(){
             )
             Spacer(modifier = Modifier.weight(1f))
             Card(
-                modifier = Modifier.fillMaxWidth().height(200.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(400.dp),
                 shape = RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp),
                 colors = CardDefaults.cardColors(Color.White)
 
             ) {
-
+                 Column(
+                     modifier = Modifier.padding(40.dp)
+                 ) {
+                     Text(
+                         modifier = Modifier.padding(bottom = 20.dp),
+                         text = "Acessar",
+                         fontWeight = FontWeight.Bold,
+                         fontSize = 20.sp,
+                         color = Color.Black
+                     )
+                     TextField(
+                         modifier = Modifier.fillMaxWidth(),
+                         value = "",
+                         onValueChange = {},
+                         label = {
+                             Text(text = "Email")
+                         }
+                     )
+                     TextField(
+                         modifier = Modifier.fillMaxWidth(),
+                         value = "",
+                         onValueChange = {},
+                         label = {
+                             Text(text = "Senha")
+                         }
+                     )
+                     Button(
+                         modifier = Modifier.fillMaxWidth(),
+                         onClick = {
+                         /*TODO*/
+                         }
+                     ) {
+                         Text(text = "Login")
+                     }
+                     Row(
+                         modifier = Modifier.fillMaxWidth(),
+                         horizontalArrangement = Arrangement.Center
+                     ) {
+                         Text(text = "Não possuo conta")
+                         Text(
+                             text = "Crie sua conta",
+                             color = Color.Blue
+                         )
+                     }
+                 }
             }
         }
     }
