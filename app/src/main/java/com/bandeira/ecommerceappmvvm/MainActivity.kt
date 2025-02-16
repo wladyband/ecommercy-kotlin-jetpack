@@ -7,10 +7,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -26,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bandeira.ecommerceappmvvm.ui.theme.EcommerceAppMVVMTheme
 
 class MainActivity : ComponentActivity() {
@@ -66,7 +72,9 @@ fun LoginContent(){
             )
         )
         Column(
-            modifier = Modifier.fillMaxSize().padding(top = 50.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 50.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
@@ -79,8 +87,18 @@ fun LoginContent(){
             Text(
                 text = "Ecommerce",
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = Color.White,
+                fontSize = 20.sp
             )
+            Spacer(modifier = Modifier.weight(1f))
+            Card(
+                modifier = Modifier.fillMaxWidth().height(200.dp),
+                shape = RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp),
+                colors = CardDefaults.cardColors(Color.White)
+
+            ) {
+
+            }
         }
     }
 }
