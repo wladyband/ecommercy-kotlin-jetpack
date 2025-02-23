@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <!-- Novas cores adicionadas abaixo -->
+    <color name="red">#bc4a2f</color> <!-- Cor vermelha -->
+    <color name="orange">#dc8553</color> <!-- Cor laranja -->
+    <color name="pale_yellow">#e8cfa6</color> <!-- Cor amarelo pálido -->
+    <color name="light_peach">#e2ba96</color> <!-- Cor pêssego claro -->
+    <color name="pale_green">#f3f9e8</color> <!-- Cor verde pálido -->
+    <color name="dark_gray">#423c2e</color> <!-- Cor cinza escuro -->
+    <color name="brown">#74482f</color> <!-- Cor marrom -->
+    <color name="dark_brown">#8b6445</color> <!-- Cor marrom escuro -->
+    <color name="taupe">#8c7b65</color> <!-- Cor taupe -->
+    <color name="cream">#cbcb2b</color> <!-- Cor creme -->
+</resources>
