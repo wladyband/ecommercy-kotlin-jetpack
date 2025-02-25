@@ -13,6 +13,6 @@ fun NavGraphBuilder.AuthNavGraph(navController: NavHostController) {
     }
 
     composable(route = AuthView.Register.route) {
-        RegisterView()
+        RegisterView(navController)
     }
 }
