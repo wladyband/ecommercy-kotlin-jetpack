@@ -16,32 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.bandeira.ecommerceappmvvm.prese.ui.presentation.ui.theme.components.DefaultTopBar
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 fun RegisterView(navController: NavHostController){
     Scaffold(
             topBar = {
-                TopAppBar(
-                    title = {
-                    Text(
-                        text = "Cadastro",
-                        fontSize = 19.sp
-                    )
-                },
-                Modifier.background(Color.White),
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            navController.popBackStack()
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.ArrowBack,
-                                contentDescription = "",
-                                tint = Color.Black
-                            )
-                        }
-                    }
-            )
+              DefaultTopBar(
+                  upAvailable = true,
+                  title = "Cadastro",
+                  navController = navController
+              )
         }
     ) {
          paddingValues ->
