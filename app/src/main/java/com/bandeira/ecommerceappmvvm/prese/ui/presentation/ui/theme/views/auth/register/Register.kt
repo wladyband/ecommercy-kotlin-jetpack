@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.bandeira.ecommerceappmvvm.prese.ui.presentation.ui.theme.components.DefaultTopBar
+import com.bandeira.ecommerceappmvvm.prese.ui.presentation.ui.theme.views.auth.register.components.RegisterContent
 
 @Composable
 fun RegisterView(navController: NavHostController){
@@ -30,9 +31,6 @@ fun RegisterView(navController: NavHostController){
         }
     ) {
          paddingValues ->
-        Text(
-            modifier = Modifier.padding(paddingValues = paddingValues),
-            text = "Registro"
-        )
+        RegisterContent(paddingValues = paddingValues)
     }
 }

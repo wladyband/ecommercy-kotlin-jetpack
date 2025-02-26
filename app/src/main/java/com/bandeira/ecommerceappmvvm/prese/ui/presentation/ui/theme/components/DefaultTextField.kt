@@ -2,8 +2,6 @@ package com.bandeira.ecommerceappmvvm.presentation.ui.theme.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -17,18 +15,18 @@ import com.bandeira.ecommerceappmvvm.presentation.ui.theme.Red
 
 @Composable
 fun DefaultTextField(
-    value: String,
+    value: String? = "",
     onValueChange: (String) -> Unit,
     label: String,
     leadingIcon: ImageVector,
     contentDescription: String,
     keyboardType: KeyboardType = KeyboardType.Text,
     modifier: Modifier,
-    isPasswordField: Boolean = false // Novo parâmetro opcional
-) {
+    isPasswordField: Boolean? = false,
+    ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(), // Mantém a flexibilidade do Modifier
-        value = value,
+        value = value ?: "" ,
         onValueChange = onValueChange,
         label = { Text(text = label) },
         leadingIcon = {
@@ -41,6 +39,7 @@ fun DefaultTextField(
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = keyboardType // Aplica o tipo de teclado automaticamente
         ),
-        visualTransformation = if (isPasswordField) PasswordVisualTransformation() else VisualTransformation.None
+        visualTransformation = if (isPasswordField ?: false) PasswordVisualTransformation() else VisualTransformation.None
+
     )
 }
