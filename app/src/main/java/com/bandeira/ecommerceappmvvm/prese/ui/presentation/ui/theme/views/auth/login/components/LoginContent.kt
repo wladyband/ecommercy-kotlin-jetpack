@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -36,19 +38,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
 import com.bandeira.ecommerceappmvvm.prese.R
 import com.bandeira.ecommerceappmvvm.prese.ui.presentation.navigation.view.AuthView
+import com.bandeira.ecommerceappmvvm.prese.ui.presentation.ui.theme.views.auth.login.LoginViewModel
 import com.bandeira.ecommerceappmvvm.presentation.ui.theme.DarkGray
 import com.bandeira.ecommerceappmvvm.presentation.ui.theme.components.DefaultButton
 import com.bandeira.ecommerceappmvvm.presentation.ui.theme.components.DefaultTextField
 
 @Composable
-fun LoginContent(navController: NavHostController, paddingValues: PaddingValues){
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+fun LoginContent(navController: NavHostController, paddingValues: PaddingValues, vm: LoginViewModel = hiltViewModel()){
 
     Box(modifier = Modifier
         .padding(paddingValues = paddingValues)
@@ -102,7 +104,9 @@ fun LoginContent(navController: NavHostController, paddingValues: PaddingValues)
                 )
             ) {
                 Column(
-                    modifier = Modifier.padding(40.dp)
+                    modifier = Modifier
+                        .padding(40.dp)
+                        .verticalScroll(rememberScrollState())
                 ) {
                     Text(
                         modifier = Modifier.padding(bottom = 20.dp),
@@ -112,8 +116,8 @@ fun LoginContent(navController: NavHostController, paddingValues: PaddingValues)
                         color = Color.Black
                     )
                     DefaultTextField(
-                        value = email,
-                        onValueChange = { email = it },
+                        value = vm.email,
+                        onValueChange = { text -> vm.email = text },
                         label = "Email",
                         leadingIcon = Icons.Default.Email,
                         contentDescription = "Email icon",
@@ -122,8 +126,8 @@ fun LoginContent(navController: NavHostController, paddingValues: PaddingValues)
                         modifier = Modifier.fillMaxWidth()
                     )
                     DefaultTextField(
-                        value = password,
-                        onValueChange = { password = it },
+                        value = vm.password,
+                        onValueChange = { text -> vm.password = text },
                         label = "Senha",
                         leadingIcon = Icons.Default.Lock,
                         contentDescription = "Senha icon",
@@ -135,7 +139,9 @@ fun LoginContent(navController: NavHostController, paddingValues: PaddingValues)
                         text = "Criar Conta",
                         onClick = { /* Implementar lógica de cadastro */ },
                         buttonColor = DarkGray,
-                        modifier = Modifier.fillMaxWidth().height(50.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
                         buttonPadding = 5.dp // Define um espaçamento externo de 16dp
                     )
                     Row(
