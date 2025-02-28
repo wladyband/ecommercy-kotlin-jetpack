@@ -36,13 +36,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bandeira.ecommerceappmvvm.prese.R
+import com.bandeira.ecommerceappmvvm.prese.ui.presentation.ui.theme.views.auth.register.RegisterViewModel
 import com.bandeira.ecommerceappmvvm.presentation.ui.theme.components.DefaultButton
 import com.bandeira.ecommerceappmvvm.presentation.ui.theme.components.DefaultTextField
 
 
 @Composable
-fun RegisterContent(paddingValues: PaddingValues) {
+fun RegisterContent(paddingValues: PaddingValues, vm: RegisterViewModel = hiltViewModel()) {
+
+    val state = vm.state
 
     Box(
         modifier = Modifier
@@ -78,51 +82,55 @@ fun RegisterContent(paddingValues: PaddingValues) {
                          color = Color.Black
                      )
                      DefaultTextField(
-                         onValueChange = {  },
+                         value = state.name,
+                         onValueChange = { text -> vm.onNameInput(text) },
                          label = "Nome",
                          leadingIcon = Icons.Default.Person,
                          contentDescription = "Nome icon",
                          modifier = Modifier.fillMaxWidth()
                      )
                      DefaultTextField(
-                         onValueChange = {  },
+                         value = state.lastName,
+                         onValueChange = { text -> vm.onLastNameInput(text) },
                          label = "Apelido",
                          leadingIcon = Icons.Default.Person,
                          contentDescription = "Apelido icon",
                          modifier = Modifier.fillMaxWidth()
                      )
                      DefaultTextField(
-                         onValueChange = {  },
+                         value = state.email,
+                         onValueChange = { text -> vm.onEmailInput(text) },
                          label = "Email Pessoal",
                          leadingIcon = Icons.Default.Email,
                          contentDescription = "Email person",
-                         isPasswordField = false,
                          modifier = Modifier.fillMaxWidth()
                      )
                      DefaultTextField(
-                         onValueChange = {  },
+                         value = state.phone,
+                         onValueChange = { text -> vm.onPhoneInput(text) },
                          label = "Celular",
                          leadingIcon = Icons.Default.Call,
                          contentDescription = "Call person",
-                         isPasswordField = false,
                          keyboardType = KeyboardType.Number,
                          modifier = Modifier.fillMaxWidth()
                      )
                      DefaultTextField(
-                         onValueChange = {  },
+                         value = state.password,
+                         onValueChange = { text -> vm.onPasswordInput(text) },
                          label = "Senha",
                          leadingIcon = Icons.Default.Lock,
-                         contentDescription = "Email person",
-                         isPasswordField = false,
+                         contentDescription = "Password person",
+                         isPasswordField = true,
                          keyboardType = KeyboardType.Password,
                          modifier = Modifier.fillMaxWidth()
                      )
                      DefaultTextField(
-                         onValueChange = {  },
+                         value = state.confirmPassword,
+                         onValueChange = { text -> vm.onConfirmPasswordInput(text) },
                          label = "Confirmação da Senha",
                          leadingIcon = Icons.Default.Lock,
-                         contentDescription = "Senha person",
-                         isPasswordField = false,
+                         contentDescription = "ConfirmPassword person",
+                         isPasswordField = true,
                          keyboardType = KeyboardType.Password,
                          modifier = Modifier.fillMaxWidth()
                      )

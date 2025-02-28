@@ -11,12 +11,12 @@ class LoginViewModel @Inject constructor():  ViewModel() {
     var state by mutableStateOf(LoginState())
         private set
 
-    fun onEmailInput(email: String){
-        state = state.copy(email = email)
+    fun onEmailInput(input: String){
+        state = state.copy(email = input)
     }
 
-    fun onPasswordInput(password: String){
-        state = state.copy(password = password)
+    fun onPasswordInput(input: String){
+        state = state.copy(password = input)
     }
 
 }
