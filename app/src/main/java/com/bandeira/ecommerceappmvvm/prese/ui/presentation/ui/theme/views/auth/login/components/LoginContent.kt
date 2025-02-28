@@ -52,6 +52,8 @@ import com.bandeira.ecommerceappmvvm.presentation.ui.theme.components.DefaultTex
 @Composable
 fun LoginContent(navController: NavHostController, paddingValues: PaddingValues, vm: LoginViewModel = hiltViewModel()){
 
+    val state = vm.state
+
     Box(modifier = Modifier
         .padding(paddingValues = paddingValues)
         .fillMaxSize()
@@ -116,8 +118,8 @@ fun LoginContent(navController: NavHostController, paddingValues: PaddingValues,
                         color = Color.Black
                     )
                     DefaultTextField(
-                        value = vm.email,
-                        onValueChange = { text -> vm.email = text },
+                        value = state.email,
+                        onValueChange = { text -> vm.onEmailInput(text)  },
                         label = "Email",
                         leadingIcon = Icons.Default.Email,
                         contentDescription = "Email icon",
@@ -126,8 +128,8 @@ fun LoginContent(navController: NavHostController, paddingValues: PaddingValues,
                         modifier = Modifier.fillMaxWidth()
                     )
                     DefaultTextField(
-                        value = vm.password,
-                        onValueChange = { text -> vm.password = text },
+                        value = state.password,
+                        onValueChange = { text -> vm.onPasswordInput(text) },
                         label = "Senha",
                         leadingIcon = Icons.Default.Lock,
                         contentDescription = "Senha icon",

@@ -7,7 +7,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor():  ViewModel() {
-    var email by mutableStateOf("")
-    var password by mutableStateOf("")
+
+    var state by mutableStateOf(LoginState())
+        private set
+
+    fun onEmailInput(email: String){
+        state = state.copy(email = email)
+    }
+
+    fun onPasswordInput(password: String){
+        state = state.copy(password = password)
+    }
 
 }
