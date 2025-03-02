@@ -55,7 +55,7 @@ import com.bandeira.ecommerceappmvvm.presentation.ui.theme.components.DefaultTex
 @Composable
 fun LoginContent(navController: NavHostController, paddingValues: PaddingValues, vm: LoginViewModel = hiltViewModel()){
 
-    val state = vm.state
+    val state = vm.stateLogin
     val context = LocalContext.current
 
     LaunchedEffect(key1 = vm.errorMessage) {
