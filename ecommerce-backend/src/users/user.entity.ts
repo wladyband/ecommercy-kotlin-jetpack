@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { hash } from 'bcryptjs';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  JoinTable,
+} from 'typeorm';
 
 @Entity({ name: 'users' })
 export class User {
@@ -31,4 +38,18 @@ export class User {
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   updated_at: Date;
+
+  @JoinTable({
+    name: 'user_has_roles',
+    joinColumn: {
+      name: 'id_user',
+    },
+    inverseJoinColumn: {
+      name: 'id_rol',
+    },
+  })
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await hash(this.password, Number(process.env.HASH_SALT));
+  }
 }
