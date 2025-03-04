@@ -4,6 +4,8 @@ import { User } from '../users/user.entity';
 import { RegisterAuthDto } from './dto/register-auth.dto';
 
 import { Repository } from 'typeorm';
+import { compare } from 'bcryptjs';
+import { LoginAuthDto } from './dto/login-auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -34,5 +36,19 @@ export class AuthService {
 
     const newUser = this.usersRepository.create(user);
     return this.usersRepository.save(newUser);
+  }
+  async login(loginData: LoginAuthDto) {
+    const { email, password } = loginData;
+    const userFound = await this.usersRepository.findOneBy({ email: email });
+    if (!userFound) {
+      throw new HttpException('Email não existe', HttpStatus.NOT_FOUND);
+    }
+
+    const isPasswordValid = await compare(password, userFound.password);
+    if (!isPasswordValid) {
+      // 403 FORBITTEN access denied
+      throw new HttpException('A senha está incorreta', HttpStatus.FORBIDDEN);
+    }
+    return userFound;
   }
 }
