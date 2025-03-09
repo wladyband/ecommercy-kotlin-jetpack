@@ -61,7 +61,7 @@ export class AuthService {
       token: token,
     };
 
-    delete data.user.password;
+    //delete data.user.password;
 
     return data;
   }
