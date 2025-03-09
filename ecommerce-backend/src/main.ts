@@ -6,5 +6,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ forbidUnknownValues: false }));
   await app.listen(3000);
+  // await app.listen(3000, '192.168.1.15' || 'localhost'); TUDO
 }
 bootstrap();
