@@ -30,4 +30,8 @@ export class UsersService {
     const updatedUser = Object.assign(userFound, user);
     return this.usersRepository.save(updatedUser);
   }
+
+  async updateWithImage(file: Express.Multer.File) {
+    console.log('URL: ' + file);
+  }
 }
