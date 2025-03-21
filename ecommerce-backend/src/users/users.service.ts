@@ -27,12 +27,29 @@ export class UsersService {
     if (!userFound) {
       throw new HttpException('Usuário não existe', HttpStatus.NOT_FOUND);
     }
-
     const updatedUser = Object.assign(userFound, user);
     return this.usersRepository.save(updatedUser);
   }
-  async updateWithImage(file: Express.Multer.File) {
+  async updateWithImage(
+    file: Express.Multer.File,
+    id: number,
+    user: UpdateUserDto,
+  ) {
     const url = await storage(file, file.originalname);
     console.log('URL ' + url);
+    if (url === undefined && url === null) {
+      throw new HttpException(
+        'Imagem não ser salva',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+    const userFoundUpload = await this.usersRepository.findOneBy({ id: id });
+
+    if (!userFoundUpload) {
+      throw new HttpException('Usuário não existe', HttpStatus.NOT_FOUND);
+    }
+    user.image = url;
+    const updatedUser = Object.assign(userFoundUpload, user);
+    return this.usersRepository.save(updatedUser);
   }
 }

@@ -41,7 +41,7 @@ export class UsersController {
   }
 
   // @UseGuards(JwtAuthGuard)
-  @Post('upload')
+  @Post('upload/:id')
   @UseInterceptors(FileInterceptor('file'))
   updateWithImage(
     @UploadedFile(
@@ -53,7 +53,9 @@ export class UsersController {
       }),
     )
     file: Express.Multer.File,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() user: UpdateUserDto,
   ) {
-    this.usersService.updateWithImage(file);
+    return this.usersService.updateWithImage(file, id, user);
   }
 }
