@@ -1,19 +1,20 @@
+import { compare } from 'bcryptjs';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users/user.entity';
+import { Repository, In } from 'typeorm';
 import { RegisterAuthDto } from './dto/register-auth.dto';
-
-import { In, Repository } from 'typeorm';
-import { compare } from 'bcryptjs';
 import { LoginAuthDto } from './dto/login-auth.dto';
+
 import { JwtService } from '@nestjs/jwt';
-import { Rol } from 'src/roles/rol.entity';
+import { Rol } from '../roles/rol.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
     @InjectRepository(Rol) private rolesRepository: Repository<Rol>,
+
     private jwtService: JwtService,
   ) {}
 
@@ -24,7 +25,7 @@ export class AuthService {
     if (emailExist) {
       // 409 CONFLICT
       throw new HttpException(
-        'Esse email já está cadastrado',
+        'El email ya esta registrado',
         HttpStatus.CONFLICT,
       );
     }
@@ -33,24 +34,31 @@ export class AuthService {
 
     if (phoneExist) {
       throw new HttpException(
-        'Esse contato telefonico já está registrado',
+        'El telefono ya esta registrado',
         HttpStatus.CONFLICT,
       );
     }
 
     const newUser = this.usersRepository.create(user);
-    // in roles
-    // DATA
-    const rolesIds = user.rolesIds;
+    let rolesIds = [];
+
+    if (user.rolesIds !== undefined && user.rolesIds !== null) {
+      // DATA
+      rolesIds = user.rolesIds;
+    } else {
+      rolesIds.push('CLIENT');
+    }
 
     const roles = await this.rolesRepository.findBy({ id: In(rolesIds) });
     newUser.roles = roles;
 
     const userSaved = await this.usersRepository.save(newUser);
 
+    const rolesString = userSaved.roles.map((rol) => rol.id); //['CLIENT', 'ADMIN']
     const payload = {
       id: userSaved.id,
       name: userSaved.name,
+      roles: rolesString,
     };
     const token = this.jwtService.sign(payload);
     const data = {
@@ -60,6 +68,7 @@ export class AuthService {
     delete data.user.password;
     return data;
   }
+
   async login(loginData: LoginAuthDto) {
     const { email, password } = loginData;
     const userFound = await this.usersRepository.findOne({
@@ -67,14 +76,20 @@ export class AuthService {
       relations: ['roles'],
     });
     if (!userFound) {
-      throw new HttpException('Email não existe', HttpStatus.NOT_FOUND);
+      throw new HttpException('Email does not exist', HttpStatus.NOT_FOUND);
     }
 
     const isPasswordValid = await compare(password, userFound.password);
     if (!isPasswordValid) {
+      console.log('incorrect password');
+
       // 403 FORBITTEN access denied
-      throw new HttpException('A senha está incorreta', HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        'The password is incorrect',
+        HttpStatus.FORBIDDEN,
+      );
     }
+
     const rolesIds = userFound.roles.map((rol) => rol.id); //['CLIENT', 'ADMIN']
 
     const payload = {
