@@ -43,6 +43,7 @@ export class UsersController {
   // @UseGuards(JwtAuthGuard)
   @Post('upload/:id')
   @UseInterceptors(FileInterceptor('file'))
+  @UseGuards(JwtAuthGuard)
   updateWithImage(
     @UploadedFile(
       new ParseFilePipe({

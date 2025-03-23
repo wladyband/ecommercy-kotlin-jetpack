@@ -1,10 +1,12 @@
 import { hash } from 'bcryptjs';
+import { Rol } from 'src/roles/rol.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   BeforeInsert,
   JoinTable,
+  ManyToMany,
 } from 'typeorm';
 
 @Entity({ name: 'users' })
@@ -48,6 +50,9 @@ export class User {
       name: 'id_rol',
     },
   })
+  @ManyToMany(() => Rol, (rol) => rol.users)
+  roles: Rol[];
+
   @BeforeInsert()
   async hashPassword() {
     this.password = await hash(this.password, Number(process.env.HASH_SALT));
