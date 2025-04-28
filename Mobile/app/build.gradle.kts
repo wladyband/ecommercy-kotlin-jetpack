@@ -1,9 +1,12 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id ("kotlin-kapt")
-    id ("com.google.dagger.hilt.android")
+    alias(libs.plugins.kotlin.compose) // <- novo
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
+
 
 android {
     namespace = "com.bandeira.ecommerceappmvvm.prese"
@@ -32,17 +35,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.13"
     }
     packaging {
         resources {
@@ -82,6 +85,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //gson
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
     //navigation
     implementation ("androidx.navigation:navigation-compose:2.8.7")
 
@@ -110,6 +118,8 @@ dependencies {
 
     testImplementation ("org.robolectric:robolectric:4.7")
 
+    // MOSHI
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
 
 }
 
@@ -121,3 +131,12 @@ kapt {
 //./gradlew test --info
 // ./gradlew clean test --info
 // ./gradlew clean build --refresh-dependencies
+
+kapt {
+    correctErrorTypes = true
+    javacOptions {
+        option("-Xplugin=org.jetbrains.kotlin.kapt3.KaptOptionsKt", "")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
+    }
+}
+
