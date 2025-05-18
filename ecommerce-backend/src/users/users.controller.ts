@@ -35,6 +35,7 @@ export class UsersController {
 
   @Post() // http://localhost/users -> POST
   create(@Body() user: CreateUserDto) {
+    console.log('Recebido no service:', user);
     return this.usersService.create(user);
   }
 

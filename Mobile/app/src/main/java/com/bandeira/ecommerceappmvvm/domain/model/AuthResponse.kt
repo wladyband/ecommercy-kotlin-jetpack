@@ -1,6 +1,6 @@
-package com.optic.ecommerceappmvvm.domain.model
+package com.bandeira.ecommerceappmvvm.domain.model
 
-import com.bandeira.ecommerceappmvvm.domain.model.User
+
 import com.google.gson.Gson
 
 data class AuthResponse(

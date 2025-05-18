@@ -1,8 +1,9 @@
 package com.bandeira.ecommerceappmvvm.domain.repository
 
+import com.bandeira.ecommerceappmvvm.domain.model.AuthResponse
 import com.bandeira.ecommerceappmvvm.domain.model.User
 import com.bandeira.ecommerceappmvvm.domain.util.Resource
-import com.optic.ecommerceappmvvm.domain.model.AuthResponse
+
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {

@@ -1,9 +1,13 @@
 package com.bandeira.ecommerceappmvvm.prese.ui.presentation.ui.theme.views.auth.login
 
+import android.util.Log
 import android.util.Patterns
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bandeira.ecommerceappmvvm.domain.model.AuthResponse
+import com.bandeira.ecommerceappmvvm.domain.useCase.auth.AuthUseCase
+import com.bandeira.ecommerceappmvvm.domain.util.Resource
 import com.bandeira.ecommerceappmvvm.presentation.validation.ValidationForm
 import com.bandeira.ecommerceappmvvm.presentation.validation.ValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,13 +16,34 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor():  ViewModel() {
+class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase):  ViewModel() {
 
     var stateLogin by mutableStateOf(LoginState())
         private set
 
     var errorMessage  by mutableStateOf("")
         private set
+
+    // LOGIN RESPONSE
+    var loginResponse by mutableStateOf<Resource<AuthResponse>?>(null)
+        private set
+
+
+    fun login() = viewModelScope.launch {
+        try {
+            if (validateFormLogin()) {
+                loginResponse = Resource.Loading // Em andamento
+                val result = authUseCase.login(stateLogin.email, stateLogin.password)
+                loginResponse = result
+                Log.d("LoginViewModel", "Response: $loginResponse")
+            }
+        } catch (e: Exception) {
+            // Captura qualquer erro inesperado
+            loginResponse = Resource.Failure("Erro inesperado: ${e.localizedMessage ?: "Erro desconhecido"}")
+            Log.e("LoginViewModel", "Erro no login", e)
+        }
+    }
+
 
     fun onEmailInput(input: String){
         stateLogin = stateLogin.copy(email = input)
@@ -28,18 +53,23 @@ class LoginViewModel @Inject constructor():  ViewModel() {
         stateLogin = stateLogin.copy(password = input)
     }
 
-    fun validateFormLogin() = viewModelScope.launch {
-        errorMessage = listOf(
+    suspend fun validateFormLogin(): Boolean {
+        val error = listOf(
             ValidationForm.validateEmail(stateLogin.email),
             ValidationForm.validatePassword(stateLogin.password)
-        ).filterIsInstance<ValidationResult.Error>() // Filtra apenas os erros
-            .firstOrNull()?.message ?: "" // Pega o primeiro erro encontrado
+        ).filterIsInstance<ValidationResult.Error>()
+            .firstOrNull()?.message
 
-        delay(3000)
-        if (errorMessage.isNotEmpty()) {
+        return if (error != null) {
+            errorMessage = error
+            delay(3000)
             errorMessage = ""
+            false
+        } else {
+            true
         }
     }
+
 
 
 }

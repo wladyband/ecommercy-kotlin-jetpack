@@ -149,7 +149,7 @@ fun LoginContent(navController: NavHostController, paddingValues: PaddingValues,
                     )
                     DefaultButton(
                         text = "Acessar a Conta",
-                        onClick = { vm.validateFormLogin() },
+                        onClick = { vm.login() },
                         buttonColor = DarkGray,
                         modifier = Modifier
                             .fillMaxWidth()

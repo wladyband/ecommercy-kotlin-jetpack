@@ -105,6 +105,8 @@ export class AuthService {
 
     delete data.user.password;
 
+    console.log('retorno do MOBILE', data)
+
     return data;
   }
 }

@@ -5,7 +5,13 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ forbidUnknownValues: false }));
-  await app.listen(3000);
-  // await app.listen(3000, '192.168.1.15' || 'localhost'); TUDO
+
+  app.use((req, res, next) => {
+    console.log(`[${req.method}] ${req.url}`);
+    next();
+  });
+
+  //await app.listen(3000);
+  await app.listen(3000, '0.0.0.0');
 }
 bootstrap();

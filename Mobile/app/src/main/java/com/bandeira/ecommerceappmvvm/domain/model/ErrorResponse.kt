@@ -1,4 +1,4 @@
-package com.optic.ecommerceappmvvm.domain.model
+package com.bandeira.ecommerceappmvvm.domain.model
 
 import com.squareup.moshi.JsonClass
 
