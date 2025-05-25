@@ -50,8 +50,22 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+
+            // ✅ Resolver o conflito de incremental processors
+            pickFirsts += "META-INF/gradle/incremental.annotation.processors"
+
+            // ✅ Prevenção de conflitos com arquivos comuns
+            pickFirsts += "META-INF/LICENSE.md"
+            pickFirsts += "META-INF/NOTICE.md"
+            pickFirsts += "META-INF/LICENSE.txt"
+            pickFirsts += "META-INF/NOTICE.txt"
+            pickFirsts += "META-INF/LICENSE-notice.md"
+
+            // ✅ Resolver o conflito atual
+            excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
         }
     }
+
     tasks.withType<Test> {
         testLogging {
             events("passed", "skipped", "failed")
@@ -65,6 +79,7 @@ android {
         useJUnitPlatform()  // Ativa o suporte ao JUnit 5
     }
 
+
 }
 
 dependencies {
@@ -77,6 +92,23 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.retrofit)
+    implementation(libs.gson)
+    implementation(libs.converter.gson)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.compiler)
+    implementation(libs.junit.jupiter)
+    implementation(libs.junit.jupiter.params)
+    implementation(libs.junit.jupiter)
+    implementation(libs.junit.jupiter.params)
+    implementation(libs.mockito.core)
+    implementation(libs.mockito.kotlin)
+    implementation(libs.assertj.core)
+    implementation(libs.android.test.core)
+    implementation(libs.android.test.runner)
+    implementation(libs.espresso.core)
+    implementation(libs.robolectric)
+    implementation(libs.moshi.kotlin)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -86,43 +118,43 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //gson
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.google.code.gson:gson:2.9.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+    implementation(libs.gson)
+    implementation (libs.androidx.datastore.preferences)
 
     //navigation
-    implementation ("androidx.navigation:navigation-compose:2.8.7")
+    implementation (libs.androidx.navigation.compose)
 
     //dagger hilt
-    implementation ("com.google.dagger:hilt-android:2.51.1")
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
-    kapt ("com.google.dagger:hilt-compiler:2.51.1")
+    implementation (libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.hilt.compiler)
+
 
     // JUnit 5 para testes unitários
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter.params)
+
+
 
 // Mockito para mocks (caso precise no futuro)
-    testImplementation("org.mockito:mockito-core:5.4.0")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
 
 // AssertJ para asserções mais legíveis
-    testImplementation("org.assertj:assertj-core:3.24.2")
+    testImplementation(libs.assertj.core)
 
 // Extensão do JUnit 5 para Android
-    testImplementation("de.mannodermaus.junit5:android-test-core:1.3.0")
-    androidTestImplementation("de.mannodermaus.junit5:android-test-runner:1.3.0")
+    testImplementation(libs.android.test.core)
+    testImplementation(libs.android.test.runner)
 
 // Espresso (já está incluído, mas necessário para testes instrumentados)
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(libs.espresso.core)
 
-    testImplementation ("org.robolectric:robolectric:4.7")
+    testImplementation (libs.robolectric)
 
     // MOSHI
-    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+    implementation(libs.moshi.kotlin)
 
 }
 
