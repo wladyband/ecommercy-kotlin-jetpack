@@ -15,20 +15,20 @@ object ResponseToRequest {
             }
             else {
                 val errorResponse: ErrorResponse? = ConvertErrorBody.convert(result.errorBody())
-                Resource.Failure(errorResponse?.message ?: "Error desconido")
+                Resource.Failure(errorResponse?.message ?: "Error desconhecido")
             }
         }
         catch (e: HttpException) {
             e.printStackTrace()
-            Resource.Failure(e.message ?: "Error desconido en la peticion Http")
+            Resource.Failure(e.message ?: "Error desconhecido da requisição Http")
         }
         catch (e: IOException) {
             e.printStackTrace()
-            Resource.Failure("Verifica tu conexion a internet")
+            Resource.Failure("Verificar a conexão com internet")
         }
         catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e.message ?: "Error desconido")
+            Resource.Failure(e.message ?: "Error desconhecido")
         }
     }
 
