@@ -76,16 +76,16 @@ export class AuthService {
       relations: ['roles'],
     });
     if (!userFound) {
-      throw new HttpException('Email does not exist', HttpStatus.NOT_FOUND);
+      throw new HttpException('Email não existe', HttpStatus.NOT_FOUND);
     }
 
     const isPasswordValid = await compare(password, userFound.password);
     if (!isPasswordValid) {
-      console.log('incorrect password');
+      
 
       // 403 FORBITTEN access denied
       throw new HttpException(
-        'The password is incorrect',
+        'O senha está incorreta',
         HttpStatus.FORBIDDEN,
       );
     }
