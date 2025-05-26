@@ -40,6 +40,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bandeira.ecommerceappmvvm.domain.util.PhoneNumberVisualTransformation
+import com.bandeira.ecommerceappmvvm.domain.util.formatPhoneNumber
 import com.bandeira.ecommerceappmvvm.prese.R
 import com.bandeira.ecommerceappmvvm.prese.ui.presentation.ui.theme.views.auth.register.RegisterViewModel
 import com.bandeira.ecommerceappmvvm.presentation.ui.theme.components.DefaultButton
@@ -56,6 +58,7 @@ fun RegisterContent(paddingValues: PaddingValues, vm: RegisterViewModel = hiltVi
     LaunchedEffect(vm.errorMessage) {
         if (vm.errorMessage.isNotEmpty()) {
             Toast.makeText(context, vm.errorMessage, Toast.LENGTH_LONG).show()
+            vm.errorMessage = ""
         }
     }
 
@@ -119,12 +122,15 @@ fun RegisterContent(paddingValues: PaddingValues, vm: RegisterViewModel = hiltVi
                      )
                      DefaultTextField(
                          value = state.phone,
-                         onValueChange = { text -> vm.onPhoneInput(text) },
+                         onValueChange = { text ->
+                             vm.onPhoneInput(text.filter { it.isDigit() }.take(11))
+                         },
                          label = "Celular",
                          leadingIcon = Icons.Default.Call,
                          contentDescription = "Call person",
                          keyboardType = KeyboardType.Number,
-                         modifier = Modifier.fillMaxWidth()
+                         modifier = Modifier.fillMaxWidth(),
+                         visualTransformation = PhoneNumberVisualTransformation()
                      )
                      DefaultTextField(
                          value = state.password,
@@ -152,7 +158,7 @@ fun RegisterContent(paddingValues: PaddingValues, vm: RegisterViewModel = hiltVi
                              .height(50.dp)
                              .padding(top = 5.dp),
                          text = "Confirmar",
-                         onClick = { vm.validateFormRegister() }
+                         onClick = { vm.register() }
                      )
                  }
              }

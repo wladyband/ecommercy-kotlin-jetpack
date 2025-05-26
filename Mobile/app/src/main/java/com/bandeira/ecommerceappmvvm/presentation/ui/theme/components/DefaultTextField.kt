@@ -23,6 +23,7 @@ fun DefaultTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     modifier: Modifier,
     isPasswordField: Boolean? = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None
     ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(), // Mantém a flexibilidade do Modifier
@@ -39,7 +40,7 @@ fun DefaultTextField(
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = keyboardType // Aplica o tipo de teclado automaticamente
         ),
-        visualTransformation = if (isPasswordField ?: false) PasswordVisualTransformation() else VisualTransformation.None
+        visualTransformation = if (isPasswordField == true) PasswordVisualTransformation() else visualTransformation
 
     )
 }
